@@ -12,38 +12,52 @@ import java.util.Date;
 
 
 public class LoggerService {
-
+    private SimpleDateFormat hourFormat;
     private static final Logger log = LoggerFactory.getLogger(LoggerService.class);
     private SimpleDateFormat sdf;
 
     public LoggerService() {
         this.sdf = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss.SSS");
+        this.hourFormat = new SimpleDateFormat("-dd_HH-mm");
     }
 
 
     /**
      * Adiciona uma mensagem no log.txt
      *
-     * @param msg   mensagem a ser adicionada no arquivo
+     * @param msg mensagem a ser adicionada no arquivo
      */
     public void logToFile(String msg, String fileName) {
+
+        String line = createLogLine(msg);
+        File folder = new File(AppValues.getPath());
+        folder.mkdirs();
         try {
-            String line = createLogLine(msg);
-            File folder = new File(AppValues.getPath());
-            folder.mkdirs();
-            File log = new File(folder, fileName);
+            File log = new File(folder, fileName + AppValues.getLogFormat());
             FileWriter fw = new FileWriter(log, true);
             fw.write(line);
             fw.close();
         } catch (IOException ex) {
-            log.error("Problema ao loggar no arquivo", ex);
+            log.error("Log file could not be written", ex);
+            String newFilename = new String( fileName + hourFormat.format(new Date())+ AppValues.getLogFormat());
+
+            System.out.println(newFilename);
+            File log = new File(folder, newFilename);
+            FileWriter fw = null;
+            try {
+                fw = new FileWriter(log, true);
+                fw.write(line);
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /**
      * Cria uma mensagem de Log formatada de acordo com a classe que está sendo executada
      *
-     * @param msg   mensagem do log
+     * @param msg mensagem do log
      * @return dados do log no padrão (Data, nome da classe, método e número da classe)
      */
     public String createLogLine(String msg) {

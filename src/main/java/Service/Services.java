@@ -16,7 +16,7 @@ public class Services {
 
     public String logWriter(String msg) {
         try {
-            loggerService.logToFile(msg, dateFormat.format(new Date()) + AppValues.getLogFormat());
+            loggerService.logToFile(msg, dateFormat.format(new Date()) );
             return "Success logged file!";
         } catch (Exception e) {
             return e.getMessage();
