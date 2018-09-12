@@ -30,16 +30,16 @@ public class LoggerService {
     public void logToFile(String msg, String fileName) {
 
         String line = createLogLine(msg);
-        File folder = new File(AppValues.getPath());
+        File folder = new File(AppValues.getProperty("logPath"));
         folder.mkdirs();
         try {
-            File log = new File(folder, fileName + AppValues.getLogFormat());
+            File log = new File(folder, fileName + AppValues.getProperty("logFormat"));
             FileWriter fw = new FileWriter(log, true);
             fw.write(line);
             fw.close();
         } catch (IOException ex) {
             log.error("Log file could not be written", ex);
-            String newFilename = new String( fileName + hourFormat.format(new Date())+ AppValues.getLogFormat());
+            String newFilename = new String( fileName + hourFormat.format(new Date())+ AppValues.getProperty("logFormat"));
 
             System.out.println(newFilename);
             File log = new File(folder, newFilename);
