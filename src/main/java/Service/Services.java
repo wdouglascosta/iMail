@@ -1,7 +1,6 @@
 package Service;
 
 import Application.AppValues;
-import Application.ConnectionValues;
 import LogService.LoggerService;
 import etherip.types.CIPData;
 
@@ -9,9 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Services {
-    private PlcConnect plcConnect = new PlcConnect(ConnectionValues.getIp(), ConnectionValues.getSlot());
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MMM");
-
+    private String ip = new String(AppValues.getProperty("ip"));
+    private int slot = Integer.parseInt(new String(AppValues.getProperty("slot")));
+    private PlcConnect plcConnect = new PlcConnect(ip, slot);
     private LoggerService loggerService = new LoggerService();
 
     public String logWriter(String msg) {
@@ -25,7 +25,7 @@ public class Services {
 
     private void tryConnect() {
         try {
-            plcConnect = new PlcConnect(ConnectionValues.getIp(), ConnectionValues.getSlot());
+            plcConnect = new PlcConnect(ip, slot);
         } catch (Exception notConnect) {
             System.out.println("PLC not found");
         }

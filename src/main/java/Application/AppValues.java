@@ -12,6 +12,7 @@ public class AppValues {
 //    private static String path = new String(System.getProperty("user.home") + "/iFiles");
 //    private static String logFormat = new String(".csv");
     static final Logger log = LoggerFactory.getLogger(AppValues.class);
+    private static Properties proper = getCustomFileProperties();
 
 //    public static String getPath() {
 //        return path;
@@ -22,8 +23,7 @@ public class AppValues {
 //    }
 
     public static String getProperty(String property) {
-        Properties properties = getCustomFileProperties();
-        return properties.getProperty(property);
+       return proper.getProperty(property);
     }
 
     private static Properties getCustomFileProperties() {

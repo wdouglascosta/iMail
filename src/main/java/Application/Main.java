@@ -1,5 +1,6 @@
 package Application;
 
+import Service.Locker;
 import Service.Services;
 
 
@@ -8,9 +9,7 @@ public class Main {
     private static Services services = new Services();
 
     public static void main(String[] args) {
-
-
-
+        Locker lock = new Locker();
 
         Object flag = null;
         String tag = "Bool1";

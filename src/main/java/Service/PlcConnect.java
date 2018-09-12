@@ -1,6 +1,5 @@
 package Service;
 
-import Application.ConnectionValues;
 import etherip.EtherNetIP;
 
 public class PlcConnect {
